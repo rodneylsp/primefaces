@@ -6,11 +6,13 @@ import com.algaworks.erp.model.TipoEmpresa;
 import com.algaworks.erp.repository.Empresas;
 import com.algaworks.erp.service.EmpresaService;
 import com.algaworks.erp.util.FacesMessages;
+import org.primefaces.context.RequestContext;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Named
@@ -41,6 +43,7 @@ public class GestaoEmpresasBean implements Serializable {
         service.salvar(novaEmpresa);
         consultar();
         messages.info("Empresa salva com sucesso!");
+        RequestContext.getCurrentInstance().update(Arrays.asList("frm:msgs-global", "frm:empresa-table"));
     }
 
     public List<Empresa> getTodasEmpresas() {
