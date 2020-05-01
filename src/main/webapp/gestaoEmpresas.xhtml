@@ -17,7 +17,7 @@
 
             <p:messages id="msgs-global"/>
 
-            <p:toolbar>
+            <p:toolbar id="toolbar">
                 <f:facet name="left">
 
                     <p:commandButton value="Nova" icon="ui-icon-document"
@@ -30,8 +30,10 @@
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical"/>
                     </span>
-                    <p:commandButton icon="ui-icon-pencil" title="Editar"/>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir"/>
+                    <p:commandButton icon="ui-icon-pencil" title="Editar"
+                                     disabled="#{gestaoEmpresasBean.empresaSelecionada == null}"/>
+                    <p:commandButton icon="ui-icon-trash" title="Excluir"
+                                     disabled="#{gestaoEmpresasBean.empresaSelecionada == null}"/>
                     <p:commandButton icon="ui-icon-arrowthick-1-s" title="Exportar para XLS"/>
 
                 </f:facet>
@@ -41,7 +43,12 @@
             <p:dataTable value="#{gestaoEmpresasBean.todasEmpresas}" var="empresa"
                          emptyMessage="Nenhuma empresa cadastrada"
                          rows="10" paginator="true" paginatorPosition="bottom"
-                         style="margin-top: 10px" id="empresa-table">
+                         style="margin-top: 10px" id="empresa-table"
+                         selection="#{gestaoEmpresasBean.empresaSelecionada}"
+                         selectionMode="single" rowKey="#{empresa.id}">
+
+                <p:ajax event="rowSelect" update=":frm:toolbar"/>
+                <p:ajax event="rowUnselect" update=":frm:toolbar"/>
 
                 <p:column headerText="Razão Social" sortBy="#{empresa.razaoSocial}">
                     <h:outputText value="#{empresa.razaoSocial}" />
@@ -60,6 +67,8 @@
                 resizable="false" draggable="false" modal="true" closeOnEscape="true">
 
                 <p:messages autoUpdate="true" id="msgs-dialog"/>
+                <!-- definindo como comando padrao da caixa de dialogo, o botao salvar-->
+                <p:defaultCommand target="salvar-button" scope="empresa-dialog"/>
 
                 <h:panelGrid columns="2" id="painel-dialog">
                     <p:outputLabel value="Nome Fantasia" for="nome-fantasia"/>
@@ -69,12 +78,12 @@
                     <p:inputText id="razao-social" size="60" maxlength="120" value="#{gestaoEmpresasBean.novaEmpresa.razaoSocial}"/>
 
                     <p:outputLabel value="CNPJ" for="cnpj"/>
-                    <p:inputText id="cnpj" size="18" maxlength="18" value="#{gestaoEmpresasBean.novaEmpresa.cnpj}"/>
+                    <p:inputMask id="cnpj" size="18" maxlength="18" value="#{gestaoEmpresasBean.novaEmpresa.cnpj}"
+                        mask="99.999.999/9999-99"/>
 
                     <p:outputLabel value="Data de fundação" for="data-fundacao"/>
-                    <p:inputText id="data-fundacao" size="10" maxlength="10" value="#{gestaoEmpresasBean.novaEmpresa.dataFundacao}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </p:inputText>
+                    <p:calendar id="data-fundacao" size="10" value="#{gestaoEmpresasBean.novaEmpresa.dataFundacao}"
+                        pattern="dd/MM/yyyy" mask="99/99/9999"/>
 
                     <p:outputLabel value="Tipo" for="tipo"/>
                     <p:selectOneMenu id="tipo" value="#{gestaoEmpresasBean.novaEmpresa.tipo}">
