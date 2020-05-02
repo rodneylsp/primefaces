@@ -41,7 +41,10 @@
                                      disabled="#{gestaoEmpresasBean.empresaSelecionada == null}"
                                      action="#{gestaoEmpresasBean.excluir}"
                                      process="@this"
-                                     update="empresa-table msgs-global toolbar"/>
+                                     update="empresa-table msgs-global toolbar">
+                            <p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
+                                       message="Tem certeza que deseja excluir a empresa?"/>
+                    </p:commandButton>
                     <p:commandButton icon="ui-icon-arrowthick-1-s" title="Exportar para XLS"/>
 
                 </f:facet>
