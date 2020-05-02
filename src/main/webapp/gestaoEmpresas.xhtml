@@ -45,7 +45,10 @@
                             <p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"
                                        message="Tem certeza que deseja excluir a empresa?"/>
                     </p:commandButton>
-                    <p:commandButton icon="ui-icon-arrowthick-1-s" title="Exportar para XLS"/>
+                    <p:commandButton icon="ui-icon-arrowthick-1-s" title="Exportar para XLS"
+                        ajax="false" immediate="true"> <!-- immediate - executado antes da fase de validacao no ciclo de vida do JSF-->
+                        <p:dataExporter target="empresa-table" type="xls" fileName="empresas"/>
+                    </p:commandButton>
 
                 </f:facet>
             </p:toolbar>
