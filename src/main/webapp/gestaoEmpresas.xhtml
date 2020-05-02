@@ -38,7 +38,10 @@
                         <f:setPropertyActionListener value="#{gestaoEmpresasBean.empresaSelecionada}" target="#{gestaoEmpresasBean.novaEmpresa}"/>
                     </p:commandButton>
                     <p:commandButton icon="ui-icon-trash" title="Excluir"
-                                     disabled="#{gestaoEmpresasBean.empresaSelecionada == null}"/>
+                                     disabled="#{gestaoEmpresasBean.empresaSelecionada == null}"
+                                     action="#{gestaoEmpresasBean.excluir}"
+                                     process="@this"
+                                     update="empresa-table msgs-global toolbar"/>
                     <p:commandButton icon="ui-icon-arrowthick-1-s" title="Exportar para XLS"/>
 
                 </f:facet>

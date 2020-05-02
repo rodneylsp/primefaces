@@ -47,6 +47,13 @@ public class GestaoEmpresasBean implements Serializable {
         RequestContext.getCurrentInstance().update(Arrays.asList("frm:msgs-global", "frm:empresa-table"));
     }
 
+    public void excluir(){
+        service.excluir(empresaSelecionada);
+        empresaSelecionada = null;
+        consultar();
+        messages.info("Empresa excluida com sucesso.");
+    }
+
     public List<Empresa> getTodasEmpresas() {
         return todasEmpresas;
     }

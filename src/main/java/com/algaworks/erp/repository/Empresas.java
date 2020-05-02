@@ -25,6 +25,6 @@ public class Empresas implements Serializable {
     }
 
     public void remover(Empresa empresa){
-        manager.remove(empresa);
+        manager.remove(porId(empresa.getId()));
     }
 }
